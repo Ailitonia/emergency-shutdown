@@ -1,0 +1,19 @@
+[Unit]
+Description=Emergency Shutdown Service
+After=network.target
+After=pve-guests.service
+Wants=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3.9 /root/emergency_shutdown.py
+WorkingDirectory=/root/
+StandardOutput=append:/var/log/emergency_shutdown.log
+StandardError=append:/var/log/emergency_shutdown_err.log
+SyslogIdentifier=emergency_shutdown
+
+[Install]
+WantedBy=multi-user.target
